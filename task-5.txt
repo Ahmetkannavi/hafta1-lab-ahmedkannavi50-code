@@ -1,4 +1,82 @@
-Öğrenci No:
-AD-SOYAD:
+Öğrenci No:240541603
+AD-SOYAD:AHMED KANNAVİ
 
 Lütfen seçtiğiniz algoritmaya ait çözümü ve diğer isterleri aşağıya ekleyiniz:
+ALGORİTMA IdealKahveDemleme
+
+BAŞLA
+    Yaz("Kahve türünü seçiniz (Filtre, Espresso, Turk, vb.): ")
+    KahveTuru ← Girdi()
+
+    Yaz("Demleme yöntemini seçiniz (FrenchPress, PourOver, MokaPot): ")
+    DemlemeYontemi ← Girdi()
+
+    // Kahve türüne göre başlangıç parametreleri belirle
+    EĞER KahveTuru = "Filtre" İSE
+        KahveMiktari ← 15 gram
+        SuMiktari ← 250 ml
+        SuSicakligi ← 92°C
+        DemlemeSuresi ← 4 dakika
+    EĞER KahveTuru = "Espresso" İSE
+        KahveMiktari ← 18 gram
+        SuMiktari ← 36 ml
+        SuSicakligi ← 93°C
+        DemlemeSuresi ← 0.5 dakika
+    EĞER KahveTuru = "Turk" İSE
+        KahveMiktari ← 7 gram
+        SuMiktari ← 70 ml
+        SuSicakligi ← 90°C
+        DemlemeSuresi ← 3 dakika
+    DEĞİLSE
+        Yaz("Bilinmeyen kahve türü. Varsayılan değerler atanıyor.")
+        KahveMiktari ← 10 gram
+        SuMiktari ← 200 ml
+        SuSicakligi ← 90°C
+        DemlemeSuresi ← 3 dakika
+    SON
+
+    Yaz("Kahve hazırlanıyor...")
+
+    // Su sıcaklığını kontrol et
+    EĞER SuSicakligi < 85 İSE
+        Yaz("Su çok soğuk! Isıtılıyor...")
+        SuSicakligi ← 92
+    EĞER SuSicakligi > 96 İSE
+        Yaz("Su çok sıcak! Biraz soğutuluyor...")
+        SuSicakligi ← 93
+    SON
+
+    DenemeSayisi ← 1
+    TatSkoru ← 0
+
+    // Kahve demleme döngüsü (tat tat ayarlama)
+    WHILE TatSkoru < 8 VE DenemeSayisi ≤ 3 YAP
+        Yaz("Demleme denemesi #" + DenemeSayisi)
+
+        Yaz("Kahve öğütülüyor ve hazırlanıyor...")
+        Yaz("Su " + SuSicakligi + "°C sıcaklığa ulaştı.")
+        Yaz("Demleme süresi: " + DemlemeSuresi + " dakika")
+
+        Yaz("Demleme işlemi devam ediyor...")
+        Bekle(DemlemeSuresi dakika)
+
+        Yaz("Kahve hazır! Tadım yapılıyor...")
+
+        TatSkoru ← TatDegerlendir()  // Kullanıcı girdisi (örneğin 1–10 arası)
+        EĞER TatSkoru < 8 İSE
+            Yaz("Lezzet tam değil, ayarlama yapılıyor...")
+            KahveMiktari ← KahveMiktari + 1
+            SuSicakligi ← SuSicakligi + 1
+        DEĞİLSE
+            Yaz("İdeal kahve bulundu! ☕ Skor: " + TatSkoru)
+            ÇIKIŞ
+        SON
+
+        DenemeSayisi ← DenemeSayisi + 1
+    SON
+
+    EĞER TatSkoru < 8 İSE
+        Yaz("3 deneme sonunda ideal lezzet bulunamadı. Farklı kahve türü önerilir.")
+    SON
+
+BİTİR
