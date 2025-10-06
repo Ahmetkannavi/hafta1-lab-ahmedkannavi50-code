@@ -1,4 +1,53 @@
-Öğrenci No:
-AD-SOYAD:
+Öğrenci No:240541603
+AD-SOYAD:AHMED KANNAVİ
 
 Lütfen seçtiğiniz algoritmaya ait çözümü ve diğer isterleri aşağıya ekleyiniz:
+ALGORİTMA MuzikKoleksiyonunuDuzenle
+
+BAŞLA
+    KlasorYolu ← "C:\Muzikler\"           // Ana müzik klasörü yolu
+    MuzikListesi ← TümMuzikDosyalarınıBul(KlasorYolu)
+    HataListesi ← BOŞ_LISTE
+
+    EĞER MuzikListesi BOŞSA
+        Yaz("Hiç müzik dosyası bulunamadı.")
+        DUR
+    SON
+
+    HER Dosya İÇİN MuzikListesi
+        // 1. Meta bilgileri oku
+        Tur ← Dosya.Tur
+        Sanatci ← Dosya.Sanatci
+        Yil ← Dosya.Yil
+
+        // 2. Bilgiler tam mı?
+        EĞER Tur = BOŞ VEYA Sanatci = BOŞ İSE
+            Yaz("Eksik bilgi: " + Dosya.Adi)
+            HataListesi.Ekle(Dosya)
+            DEVAM_ET
+        SON
+
+        // 3. Hedef klasörü belirle
+        HedefKlasor ← KlasorYolu + Tur + "\" + Sanatci + "\"
+
+        // 4. Klasör yoksa oluştur
+        EĞER KlasorMevcutMu(HedefKlasor) = HAYIR İSE
+            KlasorOlustur(HedefKlasor)
+        SON
+
+        // 5. Dosyayı uygun klasöre taşı
+        DosyayiTasi(Dosya, HedefKlasor)
+        Yaz(Dosya.Adi + " → " + HedefKlasor + " taşındı.")
+    SON
+
+    // 6. Eksik bilgileri raporla
+    EĞER HataListesi.Boyut > 0 İSE
+        Yaz("Eksik bilgili dosyalar listesi:")
+        HER HataDosya İÇİN HataListesi
+            Yaz("- " + HataDosya.Adi)
+        SON
+    DEĞİLSE
+        Yaz("Tüm müzik dosyaları başarıyla düzenlendi.")
+    SON
+
+BİTİR
