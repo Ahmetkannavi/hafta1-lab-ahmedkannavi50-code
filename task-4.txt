@@ -1,4 +1,61 @@
-Öğrenci No:
-AD-SOYAD:
+Öğrenci No:240541603
+AD-SOYAD:AHMED KANNAVİ
 
 Lütfen seçtiğiniz algoritmaya ait çözümü ve diğer isterleri aşağıya ekleyiniz:
+ALGORİTMA BuyukSayiCarpimi
+
+BAŞLA
+    Yaz("Birinci büyük sayıyı giriniz: ")
+    Sayi1 ← Girdi()
+    Yaz("İkinci büyük sayıyı giriniz: ")
+    Sayi2 ← Girdi()
+
+    // Sayıları string olarak ele alıyoruz (rakamlarına ulaşmak için)
+    Uzunluk1 ← Uzunluk(Sayi1)
+    Uzunluk2 ← Uzunluk(Sayi2)
+    Sonuc ← 0
+
+    // Dış döngü: ikinci sayının her basamağı için (sağdan sola)
+    j ← Uzunluk2 - 1
+    Pozisyon ← 0             // Kaç sıfır ekleyeceğimizi takip eder (örneğin onlar, yüzler basamağı)
+
+    WHILE j ≥ 0 YAP
+        Basamak2 ← TamSayi(Sayi2[j])   // ikinci sayının j. basamağı
+        GeciciSonuc ← 0
+        Elde ← 0
+        CarpanPozisyon ← 1             // 10’un kuvveti olarak kullanılacak (1,10,100...)
+
+        // İç döngü: birinci sayının her basamağı için (sağdan sola)
+        i ← Uzunluk1 - 1
+        WHILE i ≥ 0 YAP
+            Basamak1 ← TamSayi(Sayi1[i])
+            Carpim ← Basamak1 * Basamak2 + Elde
+
+            EĞER Carpim ≥ 10 İSE
+                Elde ← Carpim / 10 (tam kısmı al)
+                Carpim ← Carpim mod 10
+            DEĞİLSE
+                Elde ← 0
+            SON
+
+            // Ara sonucu basamak değerine göre ekle
+            GeciciSonuc ← GeciciSonuc + (Carpim * CarpanPozisyon)
+            CarpanPozisyon ← CarpanPozisyon * 10
+            i ← i - 1
+        SON
+
+        // Son kalan elde varsa ekle
+        EĞER Elde > 0 İSE
+            GeciciSonuc ← GeciciSonuc + (Elde * CarpanPozisyon)
+        SON
+
+        // Gecici sonucu basamak kaydırarak (0 ekleyerek) toplama
+        GeciciSonuc ← GeciciSonuc * (10 ^ Pozisyon)
+        Sonuc ← Sonuc + GeciciSonuc
+
+        Pozisyon ← Pozisyon + 1
+        j ← j - 1
+    SON
+
+    Yaz("Çarpım Sonucu: " + Sonuc)
+BİTİR
