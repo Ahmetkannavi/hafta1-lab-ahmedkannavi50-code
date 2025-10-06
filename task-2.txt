@@ -1,4 +1,70 @@
-Öğrenci No:
-AD-SOYAD:
+Öğrenci No:240541603
+AD-SOYAD:AHMED KANNAVI
 
 Lütfen seçtiğiniz algoritmaya ait çözümü ve diğer isterleri aşağıya ekleyiniz:
+ALGORİTMA EnIyiHamleSecimi
+
+BAŞLA
+    Zar1 ← Rastgele(1,6)
+    Zar2 ← Rastgele(1,6)
+    ToplamZar ← Zar1 + Zar2
+    OyuncuPozisyon ← (OyuncuPozisyon + ToplamZar) mod TahtaUzunluğu
+    Kare ← Tahta[OyuncuPozisyon]
+
+    EĞER Kare.Tipi = "Mülk" İSE
+        EĞER Kare.Sahibi = YOKSA
+            EĞER Oyuncu.Nakit > Kare.Fiyat VE Oyuncu.Nakit > MinimumNakitEşiği İSE
+                MülküSatınAl(Oyuncu, Kare)
+                Yaz("Mülk satın alındı.")
+            DEĞİLSE
+                Yaz("Yeterli nakit yok → açık artırma yapılacak.")
+                AcikArtirmaYap(Kare)
+            SON
+        DEĞİLSE EĞER Kare.Sahibi ≠ Oyuncu İSE
+            Kira ← Kare.Kira
+            EĞER Oyuncu.Nakit ≥ Kira İSE
+                Oyuncu.Nakit ← Oyuncu.Nakit - Kira
+                Kare.Sahibi.Nakit ← Kare.Sahibi.Nakit + Kira
+                Yaz("Kira ödendi.")
+            DEĞİLSE
+                Yaz("Yeterli para yok → ipotek veya satış yapılacak.")
+                İpotekVeyaSatisYap(Oyuncu)
+            SON
+        SON
+    DEĞİLSE EĞER Kare.Tipi = "Şans" VEYA Kare.Tipi = "Kamu Fonu" İSE
+        Kart ← KartCek()
+        KartaGoreIslemYap(Oyuncu, Kart)
+    DEĞİLSE EĞER Kare.Tipi = "Vergi" İSE
+        Oyuncu.Nakit ← Oyuncu.Nakit - Kare.VergiMiktari
+        Yaz("Vergi ödendi.")
+    DEĞİLSE EĞER Kare.Tipi = "Hapishane" İSE
+        OyuncuDurumu ← "Hapiste"
+        Yaz("Oyuncu hapishaneye gitti.")
+    SON
+
+    // TUR SONU: Yatırım ve Nakit Kontrolü
+    EĞER Oyuncu.Nakit > 2 × MinimumNakitEşiği İSE
+        HER RenkGrubu İÇİN
+            EĞER Oyuncu O RenkGrubundaki TÜM Mülklere Sahipse
+                VE EvSayısı < MaksEv İSE
+                    EvInsaEt(Oyuncu, RenkGrubu)
+                SON
+            SON
+        SON
+    DEĞİLSE EĞER Oyuncu.Nakit < MinimumNakitEşiği İSE
+        DüşükKarlıMülkleriİpotekle(Oyuncu)
+    SON
+
+    // Rakiplerle takas fırsatlarını kontrol et
+    HER Rakip İÇİN
+        EĞER Rakipte Oyuncunun Eksik Olduğu Bir Renk Mülkü VARSA
+            VE Oyuncuda Rakibin İstediği Mülk VARSA
+                TakasTeklifEt(Oyuncu, Rakip)
+            SON
+        SON
+    SON
+
+    Yaz("Tur tamamlandı. En iyi hamle gerçekleştirildi.")
+BİTİR
+
+SON
